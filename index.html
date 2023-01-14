@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+       function Student(name, surname, bday) {
+        this.name = name;
+        this.surname = surname;
+        this.bday = bday;
+        this.grade = new Array(10);
+        this.visit = new Array(10);
+      }
+
+      Student.prototype.age = function () {
+        return new Date().getFullYear() - this.bday;
+      };
+      Student.prototype.averageRating = function () {
+        let sumGrade = this.grade.reduce((a, b) => a + b);
+        let averGrand = sumGrade / 10;
+        return averGrand;
+      };
+      Student.prototype.present = function () {
+        let index = this.visit.findIndex(function (el) {
+          return el === undefined;
+        });
+        if (index === -1) {
+          return;
+        } else {
+          this.visit[index] = true;
+        }
+      };
+      Student.prototype.absent = function () {
+        let index = this.visit.findIndex(function (el) {
+          return el === undefined;
+        });
+        if (index === -1) {
+          return;
+        } else {
+          this.visit[index] = false;
+        }
+      };
+      Student.prototype.mark = function (value) {
+        let index = this.grade.findIndex(function (el) {
+          return el === undefined;
+        });
+        if (index === -1) {
+          return;
+        } else {
+          this.grade[index] = value;
+        }
+      };
+      Student.prototype.summary = function (fn) {
+        let averGrand = this.averageRating();
+        let sumVisits = this.visit.reduce((a, b) => a + b);
+        let averVisit = sumVisits / 10;
+        if (averVisit >= 0.9 && averGrand >= 9) {
+          return console.log("Ути какой молодчинка!");
+        } else if (averVisit >= 0.9 || averGrand >= 9) {
+          return console.log("Норм, но можно лучше");
+        } else if (averVisit < 0.9 || averGrand < 9) {
+          return console.log("Редиска");
+        }
+      };
+
+      const ivan = new Student("ivan", "ivanov", 2000);
+      const kolya = new Student("kolya", "kolyanov", 2000);
+    </script>
+  </body>
+</html>
